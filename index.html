@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="minesweeper.css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="minesweeper.js"></script>
+    <div id="divField" style="text-align: center;">
+        <div id="divNewGame">
+            Select size of grid:
+            <input size="2" maxlength="2" id="textSize"/>
+            <button id="buttonNewGame" onClick="newGame()" accesskey="n"><u>N</u>ew Game</button>
+            <button id="buttonEndGame" onClick="endGame()" accesskey="e" disabled><u>E</u>nd Game</button>
+        </div>
+        <table id="tableField" style="margin: auto" class="padding0cell0"></table>
+    </div>
+</body>
+</html>
