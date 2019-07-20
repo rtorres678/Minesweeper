@@ -1,8 +1,12 @@
 var mineField;
 var size;
+var minesLeft;
+var numBombs;
+var flag;
 function newGame(){
     size = Number(document.getElementById("textSize").value);
-    var numBombs= Number(document.getElementById("textBombs").value);
+    numBombs= Number(document.getElementById("textBombs").value);
+    flag = false;
     //Check that size is a positive number
     if(!isNaN(size) && !isNaN(numBombs)){
         if(size > 0 && numBombs > 0){
@@ -16,7 +20,7 @@ function newGame(){
                 strHtml += '<tr>'
                 for(var j=0; j < size; j++)
                 {
-                    strHtml += '<td><button class="button-cell" custAttr="uc" onClick="checkMine(' 
+                    strHtml += '<td><button class="button-cell" custAttr="uc" onClick="clickMine(' 
                     + i.toString() + ',' + j.toString() + ')" id="buttonMine' + i.toString() + '-' + j.toString() + '" ></button></td>';
                 }
                 strHtml += '</tr>'
@@ -42,6 +46,25 @@ function newGame(){
     }
 }
 
+function clickMine(row, col){
+    var buttonClicked = document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString());
+    if(flag){
+        if(buttonClicked.style.backgroundColor === ""){
+            if(buttonClicked.innerHTML === "F"){
+                buttonClicked.innerHTML = "";
+            }
+            else{
+                buttonClicked.innerHTML = "F";
+            }
+        }
+    }
+    else{
+        if(buttonClicked.innerHTML !== "F"){
+            checkMine(row, col);
+        }
+    }
+}
+
 function checkMine(row, col){
     var strOutput = row.toString() + ', ' + col.toString();
     if(row < 0 || col < 0 || row >= size || col >= size){
@@ -54,6 +77,9 @@ function checkMine(row, col){
     //alert(btnClicked);
     if(mineField[row][col] === "X"){
         btnClicked.style.backgroundColor = "red";
+        //disable all buttons and alert to game over
+        gameOver(false);
+        return;
     }
     else{
         btnClicked.style.backgroundColor = "white";
@@ -68,6 +94,23 @@ function checkMine(row, col){
             btnClicked.innerHTML = mineField[row][col];
         }
     }
+    minesLeft--;
+    if(minesLeft <= numBombs){
+        gameOver(true);
+    }
+}
+
+function gameOver(win){
+    for(var i = 0; i < size; i++){
+        for(var j = 0; j < size; j++){
+            disableMine(i,j);
+        }
+    }
+    win ? alert("You Win!!") : alert("Game Over! You lose!");
+}
+
+function disableMine(row, col){
+    document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString()).disabled = true;
 }
 
 function endGame() {
@@ -83,6 +126,8 @@ function endGame() {
     document.getElementById("buttonEndGame").disabled = true;
     document.getElementById("buttonNewGame").disabled = false;
     
+    flag = true;
+    toggleFlag();
 }
 
 function getRandInt(max){
@@ -91,6 +136,7 @@ function getRandInt(max){
 
 function createMineField(numBombs){
     mineField = new Array(size);
+    minesLeft = size * size;
     for(var i = 0; i < size; i++){
         mineField[i] = new Array(size);
         for(var j = 0; j < size; j++){
@@ -117,4 +163,23 @@ function insertMine(row, col){
             }
         }
     }
+}
+
+document.onkeypress = function keyToggleFlag(e){
+    if(e.code === "KeyF"){
+        toggleFlag();
+    }
+}
+
+function toggleFlag(){
+    //flag ? function(){ flag = false; document.getElementById("buttonFlag").style.backgroundColor = "#FFB6C1";} : function(){flag = true; document.getElementById("buttonFlag").style.backgroundColor = "";};
+    if(flag){
+        flag = false; 
+        document.getElementById("buttonFlag").style.backgroundColor = "";
+    }
+    else{
+        flag = true; 
+        document.getElementById("buttonFlag").style.backgroundColor = "#FFB6C1";
+    }
+
 }

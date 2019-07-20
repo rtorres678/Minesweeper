@@ -1,3 +1,9 @@
+body {
+    background-color: #808080;
+}
+input {
+    background-color: #DCDCDC;
+}
 button.button-cell {
     width: 30px;
     height: 30px;
