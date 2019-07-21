@@ -8,46 +8,47 @@ function newGame(){
     numBombs= Number(document.getElementById("textBombs").value);
     flag = false;
     //Check that size is a positive number
-    if(!isNaN(size) && !isNaN(numBombs)){
-        if(size > 0 && numBombs > 0){
-            //size is valid: generate new game
-            document.getElementById("textSize").disabled = true;
-            document.getElementById("textBombs").disabled = true;
-            //Generate table of buttons
-            var strHtml = '';
-            for(var i=0; i < size; i++)
-            {
-                strHtml += '<tr>'
-                for(var j=0; j < size; j++)
-                {
-                    strHtml += '<td><button class="button-cell" custAttr="uc" onClick="clickMine(' 
-                    + i.toString() + ',' + j.toString() + ')" id="buttonMine' + i.toString() + '-' + j.toString() + '" ></button></td>';
-                }
-                strHtml += '</tr>'
-            }
-            createMineField(numBombs);
+    if(checkValidGameParams()){
+        //size is valid: generate new game
+        document.getElementById("textSize").disabled = true;
+        document.getElementById("textBombs").disabled = true;
+        
+        //Generate table of buttons
+        createMineField();
 
-            //Display playing field
-            document.getElementById("tableField").innerHTML = strHtml;
-            document.getElementById("tableField").style.display = "";
-
-            //enable end game button and disable new game button
-            document.getElementById("buttonEndGame").disabled = false;
-            document.getElementById("buttonNewGame").disabled = true;
-        }
-        else{
-            alert("Size and number of bombs must be greater than zero.");
-            document.getElementById("textSize").select();
-        }
+        //enable end game button and disable new game button
+        document.getElementById("buttonEndGame").disabled = false;
+        document.getElementById("buttonNewGame").disabled = true;
     }
-    else{
-        alert("Size and number of bombs must be numbers!");
-        document.getElementById("textSize").select();
-    }
+    document.getElementById("textSize").select();
 }
 
+function checkValidGameParams(){
+    if(isNaN(size) || isNaN(numBombs)){
+        //Size or number of bombs is not a number
+        alert("Size and number of bombs must be numbers!");
+        return false;
+    }
+
+    if(size <= 0 || numBombs <= 0){
+        //Size or number of bombs is 0 or negative
+        alert("Size and number of bombs must be greater than zero.");
+        return false;
+    }
+
+    if(size * size < numBombs){
+        //Not enough space for the number of bombs selected
+        alert("Not enough space for that many bombs!");
+        return false;
+    }
+
+    return true;
+}
+
+//onClick event for buttons on mine field
 function clickMine(row, col){
     var buttonClicked = document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString());
+    //Check if the flag is set and check for mine if not
     if(flag){
         if(buttonClicked.style.backgroundColor === ""){
             if(buttonClicked.innerHTML === "F"){
@@ -66,6 +67,7 @@ function clickMine(row, col){
 }
 
 function checkMine(row, col){
+    //
     var strOutput = row.toString() + ', ' + col.toString();
     if(row < 0 || col < 0 || row >= size || col >= size){
         return;
@@ -134,7 +136,25 @@ function getRandInt(max){
     return Math.floor(Math.random() * max);
 }
 
-function createMineField(numBombs){
+function createMineField(){
+    //Populate table with buttons for minefield
+    var strHtml = '';
+    for(var i=0; i < size; i++)
+    {
+        strHtml += '<tr>'
+        for(var j=0; j < size; j++)
+        {
+            strHtml += '<td><button class="button-cell" custAttr="uc" onClick="clickMine(' 
+            + i.toString() + ',' + j.toString() + ')" id="buttonMine' + i.toString() + '-' + j.toString() + '" ></button></td>';
+        }
+        strHtml += '</tr>'
+    }
+
+    //Display playing field
+    document.getElementById("tableField").innerHTML = strHtml;
+    document.getElementById("tableField").style.display = "";
+
+    //initialize the 2D minefield array and set value to 0
     mineField = new Array(size);
     minesLeft = size * size;
     for(var i = 0; i < size; i++){
@@ -143,6 +163,8 @@ function createMineField(numBombs){
             mineField[i][j] = 0;
         }
     }
+
+    //insert mines at random locations
     for (var i = 0; i < numBombs; i++){
         //mineField[getRandInt(size)][getRandInt(size)] = "X";
         insertMine(getRandInt(size), getRandInt(size));
