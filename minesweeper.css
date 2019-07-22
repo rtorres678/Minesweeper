@@ -4,7 +4,7 @@ body {
 input {
     background-color: #DCDCDC;
 }
-button.button-cell {
+.button-cell {
     width: 30px;
     height: 30px;
     padding-right: 0px;
@@ -19,4 +19,25 @@ table.padding0cell0 td {
     padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
+}
+
+table{
+    table-layout:fixed;
+}
+
+table.cell-pad2-space2{
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+table.cell-pad2-space2 th td{
+    padding: 2px;
+}
+ 
+table.cell-pad0-space0{
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+table.cell-pad0-space0 th td{
+    padding: 0px;
 }

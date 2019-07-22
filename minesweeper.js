@@ -1,6 +1,6 @@
 var mineField;
 var size;
-var minesLeft;
+var cellsLeft;
 var numBombs;
 var flag;
 function newGame(){
@@ -96,8 +96,8 @@ function checkMine(row, col){
             btnClicked.innerHTML = mineField[row][col];
         }
     }
-    minesLeft--;
-    if(minesLeft <= numBombs){
+    cellsLeft--;
+    if(cellsLeft <= numBombs){
         gameOver(true);
     }
 }
@@ -156,7 +156,7 @@ function createMineField(){
 
     //initialize the 2D minefield array and set value to 0
     mineField = new Array(size);
-    minesLeft = size * size;
+    cellsLeft = size * size;
     for(var i = 0; i < size; i++){
         mineField[i] = new Array(size);
         for(var j = 0; j < size; j++){
