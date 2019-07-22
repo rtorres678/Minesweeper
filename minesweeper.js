@@ -41,7 +41,7 @@ function checkValidGameParams(){
         alert("Not enough space for that many bombs!");
         return false;
     }
-
+    //Game parameters are valid: continue
     return true;
 }
 
