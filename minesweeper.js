@@ -50,12 +50,17 @@ function clickMine(row, col){
     var buttonClicked = document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString());
     //Check if the flag is set and check for mine if not
     if(flag){
-        if(buttonClicked.style.backgroundColor === ""){
-            if(buttonClicked.innerHTML === "F"){
-                buttonClicked.innerHTML = "";
+        if(buttonClicked.style.backgroundColor !== "white"){
+            if(buttonClicked.dataset.flagged === "true"){
+                //Remove background if already flagged
+                buttonClicked.style.background = "";
+                buttonClicked.dataset.flagged = "false";
             }
             else{
-                buttonClicked.innerHTML = "F";
+                //Set background of button to flag image
+                buttonClicked.style.background = "url(resources/flag.png)";
+                buttonClicked.style.backgroundSize = "100%";
+                buttonClicked.dataset.flagged = "true";
             }
         }
     }
@@ -144,7 +149,7 @@ function createMineField(){
         strHtml += '<tr>'
         for(var j=0; j < size; j++)
         {
-            strHtml += '<td><button class="button-cell" custAttr="uc" onClick="clickMine(' 
+            strHtml += '<td><button class="button-cell" onClick="clickMine(' 
             + i.toString() + ',' + j.toString() + ')" id="buttonMine' + i.toString() + '-' + j.toString() + '" ></button></td>';
         }
         strHtml += '</tr>'
