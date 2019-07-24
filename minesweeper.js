@@ -84,6 +84,8 @@ function checkMine(row, col){
     //alert(btnClicked);
     if(mineField[row][col] === "X"){
         btnClicked.style.backgroundColor = "red";
+        btnClicked.style.background = "url(resources/mine.png";
+        btnClicked.style.backgroundSize = "100%";
         //disable all buttons and alert to game over
         gameOver(false);
         return;
