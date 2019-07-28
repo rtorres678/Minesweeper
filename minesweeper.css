@@ -10,6 +10,9 @@ input {
     padding-right: 0px;
     padding-left: 0px;
 }
+table{
+    table-layout:fixed;
+}
 table.padding0cell0 {
     padding: 0px 0px 0px 0px;
     border-spacing: 0px 0px;
@@ -20,26 +23,15 @@ table.padding0cell0 td {
     padding-left: 0px;
     padding-right: 0px;
 }
-
-table{
-    table-layout:fixed;
-}
-
-table.cell-pad2-space2{
-    border-collapse: separate;
-    border-spacing: 2px;
-}
-
-table.cell-pad2-space2 th td{
-    padding: 2px;
-}
- 
 table.cell-pad0-space0{
-    border-collapse: separate;
-    border-spacing: 0px;
+    padding: 0px 0px 0px 0px;
+    border-spacing: 0px 0px;
 }
-table.cell-pad0-space0 th td{
-    padding: 0px;
+table.cell-pad0-space0 td{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 button.bomb{
@@ -62,4 +54,13 @@ button.uncleared{
 button.flagged{
     background: url(resources/flag.png);
     background-size: 100%;
+}
+
+table.cell-pad2-space2{
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+table.cell-pad2-space2 td{
+    padding: 0px;
 }
