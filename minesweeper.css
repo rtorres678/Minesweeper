@@ -41,3 +41,25 @@ table.cell-pad0-space0{
 table.cell-pad0-space0 th td{
     padding: 0px;
 }
+
+button.bomb{
+    background: url(resources/mine.png);
+    background-size: 100%;
+}
+button.detonated{
+    background: url(resources/mine.png);
+    background-size: 100%;
+    background-color: red;
+}
+button.cleared{
+    background: "";
+    background-color: white;
+}
+button.uncleared{
+    background: "";
+    background-color: "";
+}
+button.flagged{
+    background: url(resources/flag.png);
+    background-size: 100%;
+}

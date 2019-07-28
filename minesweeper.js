@@ -50,22 +50,25 @@ function clickMine(row, col){
     var buttonClicked = document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString());
     //Check if the flag is set and check for mine if not
     if(flag){
-        if(buttonClicked.style.backgroundColor !== "white"){
+        if(buttonClicked.dataset.checked === "false"){
             if(buttonClicked.dataset.flagged === "true"){
                 //Remove background if already flagged
-                buttonClicked.style.background = "";
+                //buttonClicked.style.background = "";
                 buttonClicked.dataset.flagged = "false";
-            }
+                buttonClicked.classList.add("uncleared")
+                buttonClicked.classList.remove("flagged");            }
             else{
                 //Set background of button to flag image
-                buttonClicked.style.background = "url(resources/flag.png)";
-                buttonClicked.style.backgroundSize = "100%";
+                //buttonClicked.style.background = "url(resources/flag.png)";
+                //buttonClicked.style.backgroundSize = "100%";
                 buttonClicked.dataset.flagged = "true";
+                buttonClicked.classList.remove("uncleared")
+                buttonClicked.classList.add("flagged");
             }
         }
     }
     else{
-        if(buttonClicked.innerHTML !== "F"){
+        if(buttonClicked.dataset.flagged !== "true"){
             checkMine(row, col);
         }
     }
@@ -78,20 +81,26 @@ function checkMine(row, col){
         return;
     }
     var btnClicked = document.getElementById("buttonMine"+(row).toString()+'-'+(col).toString());
-    if(btnClicked.style.backgroundColor !== ""){
+    if(btnClicked.dataset.checked === "true"){
+    //if(!btnClicked.classList.contains("uncleared")){
         return;
     }
     //alert(btnClicked);
     if(mineField[row][col] === "X"){
-        btnClicked.style.backgroundColor = "red";
-        btnClicked.style.background = "url(resources/mine.png";
-        btnClicked.style.backgroundSize = "100%";
+        //btnClicked.style.backgroundColor = "red";
+        //btnClicked.style.background = "url(resources/mine.png";
+        //btnClicked.style.backgroundSize = "100%";
+        btnClicked.classList.remove("uncleared");
+        btnClicked.classList.add("detonated")
         //disable all buttons and alert to game over
         gameOver(false);
         return;
     }
     else{
-        btnClicked.style.backgroundColor = "white";
+        //btnClicked.style.backgroundColor = "white";
+        btnClicked.classList.remove("uncleared");
+        btnClicked.classList.add("cleared");
+        btnClicked.dataset.checked = "true";
         if(mineField[row][col] === 0){
             //Call function to clear all adjacent 0's
             checkMine(row+1, col);
@@ -151,7 +160,7 @@ function createMineField(){
         strHtml += '<tr>'
         for(var j=0; j < size; j++)
         {
-            strHtml += '<td><button class="button-cell" onClick="clickMine(' 
+            strHtml += '<td><button class="button-cell uncleared" data-checked="false" onClick="clickMine(' 
             + i.toString() + ',' + j.toString() + ')" id="buttonMine' + i.toString() + '-' + j.toString() + '" ></button></td>';
         }
         strHtml += '</tr>'
