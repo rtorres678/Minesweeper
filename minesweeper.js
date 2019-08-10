@@ -195,7 +195,7 @@ function insertMine(row, col){
 }
 
 document.onkeypress = function keyToggleFlag(e){
-    if(e.code === "KeyF"){
+    if(e.charCode === 102){
         toggleFlag();
     }
 }
